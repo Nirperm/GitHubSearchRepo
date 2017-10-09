@@ -8,36 +8,38 @@
 
 import Foundation
 
-struct Repository: JSONDecodable{
+struct Repository: JSONDecodable {
+  
   let id: Int
   let name: String
-  let fullname: String
+  let fullName: String
   let owner: User
   
   init(json: Any) throws {
-    guard let dictionary = json as? [String: Any] else {
-      throw JSONDecoderError.invalidFormat(json: json)
+    guard let dictionary = json as? [String : Any] else {
+      throw JSONDecodeError.invalidFormat(json: json)
     }
     
     guard let id = dictionary["id"] as? Int else {
-      throw JSONDecoderError.missingValue(key: "id", actualValue: dictionary["id"])
+      throw JSONDecodeError.missingValue(key: "id", actualValue: dictionary["id"])
     }
     
     guard let name = dictionary["name"] as? String else {
-      throw JSONDecoderError.missingValue(key: "login", actualValue: dictionary["login"])
+      throw JSONDecodeError.missingValue(key: "name", actualValue: dictionary["name"])
     }
     
-    guard let fullname = dictionary["fullname"] as? String else {
-      throw JSONDecoderError.missingValue(key: "fullname", actualValue: dictionary["fullname"])
+    guard let fullName = dictionary["full_name"] as? String else {
+      throw JSONDecodeError.missingValue(key: "full_name", actualValue: dictionary["full_name"])
     }
     
     guard let ownerObject = dictionary["owner"] else {
-      throw JSONDecoderError.missingValue(key: "owner", actualValue: dictionary["owner"])
+      throw JSONDecodeError.missingValue(key: "owner", actualValue: dictionary["owner"])
     }
     
     self.id = id
     self.name = name
-    self.fullname = fullname
+    self.fullName = fullName
     self.owner = try User(json: ownerObject)
   }
 }
+

@@ -8,21 +8,22 @@
 
 import Foundation
 
-struct User: JSONDecodable{
+struct User: JSONDecodable {
+  
   let id: Int
   let login: String
   
   init(json: Any) throws {
     guard let dictionary = json as? [String: Any] else {
-      throw JSONDecoderError.invalidFormat(json: json)
+      throw JSONDecodeError.invalidFormat(json: json)
     }
     
     guard let id = dictionary["id"] as? Int else {
-      throw JSONDecoderError.missingValue(key: "id", actualValue: dictionary["id"])
+      throw JSONDecodeError.missingValue(key: "id", actualValue: dictionary["id"])
     }
     
     guard let login = dictionary["login"] as? String else {
-      throw JSONDecoderError.missingValue(key: "login", actualValue: dictionary["login"])
+      throw JSONDecodeError.missingValue(key: "login", actualValue: dictionary["login"])
     }
     
     self.id = id
